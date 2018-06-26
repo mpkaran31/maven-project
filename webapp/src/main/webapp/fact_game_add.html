@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+
+	<link rel="stylesheet" href="index.css">
+	
+    </head>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+
+	$(document).ready(function()
+	{		
+		$("#box").focusout( function (event)
+		{
+			$("#box");
+			var div = $("<div/>");
+			var valFlag = validateString();
+			if ( valFlag != false ) 
+			{	
+			div.html( getDynamicLabel() );				
+			$("#story").append(div);
+			$("#box").val("");
+			}
+			else 
+			{
+				alert ( "Invalid String...!" );
+			}
+			});
+			$(document).on('click', "input.editbtn", function () {
+			    
+			    var edit_btn_id = $(this).attr('id');
+			    var index = edit_btn_id.substring( edit_btn_id.indexOf("str_edit_btn_") + 13 );
+			    strEditBox( index ); 
+
+			});
+			
+			$(document).on('click', "input.commentbtn", function () {
+			    
+			    var comment_btn_id = $(this).attr('id');
+			    var index1 = comment_btn_id.substring( comment_btn_id.indexOf("str_comment_btn_") + 16 );
+			    strCommentButton( index1  );
+
+			});
+			
+			$(document).on('click', "input.removebtn", function () {
+			    
+			    var remove_btn_id = $(this).attr('id');
+			    var index2 = remove_btn_id.substring( remove_btn_id.indexOf("str_rmv_btn_") + 12 );
+			    strRemoveButton( index2 );
+			});	
+
+
+
+	});
+
+
+	function getValue()
+	{
+		var id_increment;
+		id_increment = $("#str_lbl_count").val();
+		$("#str_lbl_count").val(++id_increment);	
+		return id_increment;
+	} 
+
+	function strCommentButton( id ){
+	
+		var get_str_id =  id;
+		$( "#str_comment_box_"+get_str_id ).show();	
+	}
+		
+
+	function strEditBox( id )
+	{	    	
+		$( 'input#box').val($('label#str_box_'+id).text());
+		$( "#id_stry_sntnce_count_"+id ).remove();	
+		$( "#str_box_"+id ).remove();
+		$( "#str_edit_btn_"+id ).remove();
+		$( "#str_rmv_btn_"+id ).remove();	
+		$( "#str_comment_btn_"+id ).remove();	
+		$( "#str_comment_box_"+id ).remove();
+	}
+
+	function strRemoveButton( id )
+	{	    
+		var rmv_btn_id = id;
+		$( "#id_stry_sntnce_count_"+rmv_btn_id ).remove();	
+		$( "#str_box_"+rmv_btn_id ).remove();
+		$( "#str_edit_btn_"+rmv_btn_id ).remove();
+		$( "#str_rmv_btn_"+rmv_btn_id ).remove();	
+		$( "#str_comment_btn_"+rmv_btn_id ).remove();	
+		$( "#str_comment_box_"+rmv_btn_id ).remove();
+	}
+
+	function getDynamicLabel() 
+	{
+		var autocount = getValue();
+		var i =	autocount;
+		var input_string = $("#box").val();
+		return '<label id="id_stry_sntnce_count_'+autocount+'">'+autocount+'</label><label id="str_box_'+autocount+'"> ' +input_string+ ' </label>'
+			+'<input id ="altr_txt_box1_'+autocount+'" type="hidden" value ="" />'
+			+'<input id ="str_edit_btn_'+autocount+'" type="button" value="Edit"  class="editbtn"  />'
+			+'<input id ="str_rmv_btn_'+autocount+'" type="button" value="Remove"  class="removebtn" />'
+			+'<input id ="str_comment_btn_'+ autocount +'" type="button" value="Comments" class="commentbtn" />'
+			+'<input id = "str_comment_box_'+ autocount +'" type="text" value="" style="display:none" />&nbsp'; 	
+	}	
+
+
+	
+
+
+	function validateString ()
+	{
+
+		var input_str =$("#box").val();
+		if(input_str[0] !== input_str[0].toUpperCase())
+		{	
+    		alert("THE FIRST CHARACTER IS NOT A UPPERCASE");
+		}
+			var input_str =$("#box").val();
+			var white_space_check3 = input_str.substring(input_str.length-5);
+			var white_space_check2 = input_str.substring(input_str.length-4);
+			var white_space_check1 = input_str.substring(input_str.length-3);
+			var white_space_check = input_str.substring(input_str.length-2);
+			document.getElementById("box").innerHTML = white_space_check3;
+			document.getElementById("box").innerHTML = white_space_check2;
+			document.getElementById("box").innerHTML = white_space_check1;
+			document.getElementById("box").innerHTML = white_space_check;
+
+			if( white_space_check3 == "    ." || white_space_check2 == "   ." || white_space_check1 == "  ." || white_space_check == " .")
+			{
+   				alert("END OF THE STRING CONTAINS SPACE"); 
+			}
+				var input_str =$("#box").val();	
+				var special_character = /[ó/º/í/]/g;
+				if( special_character.test(input_str) == true)
+				{
+					var check = special_character.test(input_str);	
+					var found_special_character = input_str.match(special_character);	
+					alert("THE STRING CONTAINS SPECIAL CHARACTER \t:" + found_special_character);	
+				}
+
+				var input_str =$("#box").val();
+				var two_dots = input_str.substring(input_str.length-2);
+				document.getElementById("box1").innerHTML = two_dots;
+				if( two_dots == "..")
+				{
+					alert("END OF THE STRING CONTAINS TWO DOTS")
+				}
+				
+				var input_str =$("#box").val();
+				if(!input_str.match(/^\w+((\s\w+)?\s\w+)?$/)) 
+				{
+                    			alert("STRING HAVE MORE THAN ONE SPACE BETWEEN WORDS");
+				}
+
+	}
+
+	$(document).ready(function()
+	{		
+			
+					
+		$("#box1").focusout( function (event)
+		{
+			$("#box1");
+			var div = $("<div/>");
+			var valFlag = validateString1();
+			if ( valFlag != false ) 
+			{	
+			div.html( getDynamicLabel1() );				
+			$("#positive").append(div);
+			$("#box1").val("");
+			}
+			else 
+			{
+				alert ( "Invalid String...!" );
+			}
+			});
+			$(document).on('click', "input.editbtn1", function () {
+			    
+			    var edit_btn_id = $(this).attr('id');
+			    var index = edit_btn_id.substring( edit_btn_id.indexOf("pos_edit_btn_") + 13 );
+			    editBox( index ); 
+
+			});
+			
+			$(document).on('click', "input.commentbtn1", function () {
+			    
+			    var comment_btn_id = $(this).attr('id');
+			    var index1 = comment_btn_id.substring( comment_btn_id.indexOf("pos_comment_btn_") + 16 );
+			    positiveCommentButton( index1  );
+
+			});
+			
+			$(document).on('click', "input.removebtn1", function () {
+			    
+			    var remove_btn_id = $(this).attr('id');
+			    var index2 = remove_btn_id.substring( remove_btn_id.indexOf("pos_rmv_btn_") + 12 );
+			    removeButton( index2 );
+			});	
+
+
+
+	});
+
+
+	function getValue1()
+	{
+		var id_increment;
+		id_increment = $("#lbl_count").val();
+		$("#lbl_count").val(++id_increment);	
+		return id_increment;
+	} 
+
+	function positiveCommentButton( id ){
+	
+		var get_str_id =  id;
+		$( "#pos_comment_box_"+get_str_id ).show();	
+	}
+		
+
+	function editBox( id )
+	{	    	
+		$( 'input#box1').val($('label#boxnew_'+id).text());
+		$( "#id_sentence_count_"+id ).remove();	
+		$( "#boxnew_"+id ).remove();
+		$( "#pos_edit_btn_"+id ).remove();
+		$( "#pos_rmv_btn_"+id ).remove();	
+		$( "#pos_comment_btn_"+id ).remove();	
+		$( "#pos_comment_box_"+id ).remove();
+	}
+
+	function removeButton( id )
+	{	    
+		var rmv_btn_id = id;
+		$( "#id_sentence_count_"+rmv_btn_id ).remove();	
+		$( "#boxnew_"+rmv_btn_id ).remove();
+		$( "#pos_edit_btn_"+rmv_btn_id ).remove();
+		$( "#pos_rmv_btn_"+rmv_btn_id ).remove();	
+		$( "#pos_comment_btn_"+rmv_btn_id ).remove();	
+		$( "#pos_comment_box_"+rmv_btn_id ).remove();
+	}
+
+	function getDynamicLabel1() 
+	{
+		var autocount = getValue1();
+		var i =	autocount;
+		var input_string = $("#box1").val();
+		return '<label id="id_sentence_count_'+autocount+'">'+autocount+'</label><label id="boxnew_'+autocount+'"> ' +input_string+ ' </label>'
+			+'<input id ="altr_txt_box_'+autocount+'" type="hidden" vale ="" />'
+			+'<input id ="pos_edit_btn_'+autocount+'" type="button" value="Edit"  class="editbtn1"  />'
+			+'<input id ="pos_rmv_btn_'+autocount+'" type="button" value="Remove"  class="removebtn1" />'
+			+'<input id ="pos_comment_btn_'+ autocount +'" type="button" value="Comments" class="commentbtn1" />'
+			+'<input id = "pos_comment_box_'+ autocount +'" type="text" value="" style="display:none" />&nbsp'; 	
+	}	
+
+
+	
+
+
+	function validateString1 ()
+	{
+
+		var input_str =$("#box1").val();
+		if(input_str[0] !== input_str[0].toUpperCase())
+		{	
+    		alert("THE FIRST CHARACTER IS NOT A UPPERCASE");
+		}
+			var input_str =$("#box1").val();
+			var white_space_check3 = input_str.substring(input_str.length-5);
+			var white_space_check2 = input_str.substring(input_str.length-4);
+			var white_space_check1 = input_str.substring(input_str.length-3);
+			var white_space_check = input_str.substring(input_str.length-2);
+			document.getElementById("box1").innerHTML = white_space_check3;
+			document.getElementById("box1").innerHTML = white_space_check2;
+			document.getElementById("box1").innerHTML = white_space_check1;
+			document.getElementById("box1").innerHTML = white_space_check;
+
+			if( white_space_check3 == "    ." || white_space_check2 == "   ." || white_space_check1 == "  ." || white_space_check == " .")
+			{
+   				alert("END OF THE STRING CONTAINS SPACE"); 
+			}
+				var input_str =$("#box1").val();	
+				var special_character = /[ó/º/í/]/g;
+				if( special_character.test(input_str) == true)
+				{
+					var check = special_character.test(input_str);	
+					var found_special_character = input_str.match(special_character);	
+					alert("THE STRING CONTAINS SPECIAL CHARACTER \t:" + found_special_character);	
+				}
+
+				var input_str =$("#box1").val();
+				var two_dots = input_str.substring(input_str.length-2);
+				document.getElementById("box1").innerHTML = two_dots;
+				if( two_dots == "..")
+				{
+					alert("END OF THE STRING CONTAINS TWO DOTS")
+				}
+
+				var input_str =$("#box1").val();
+				if(!input_str.match(/^\w+((\s\w+)?\s\w+)?$/)) 
+				{
+                    			alert("STRING HAVE MORE THAN ONE SPACE BETWEEN WORDS");
+				}
+
+				
+	}
+
+	$(document).ready(function()
+	{		
+		$("#box2").focusout( function (event)
+		{
+			$("#box2");
+			var div = $("<div/>");
+			var valFlag = validateString2();
+			if ( valFlag != false ) 
+			{	
+			div.html( getDynamicLabel2() );				
+			$("#negative").append(div);
+			$("#box2").val("");
+			}
+			else 
+			{
+				alert ( "Invalid String...!" );
+			}
+			});
+			$(document).on('click', "input.editbtn2", function () {
+			    
+			    var edit_btn_id = $(this).attr('id');
+			    var index = edit_btn_id.substring( edit_btn_id.indexOf("neg_edit_btn_") + 13 );
+			    negEditBox( index ); 
+
+			});
+			
+			$(document).on('click', "input.commentbtn2", function () {
+			    
+			    var comment_btn_id = $(this).attr('id');
+			    var index1 = comment_btn_id.substring( comment_btn_id.indexOf("neg_comment_btn_") + 16 );
+			    negCommentButton( index1  );
+
+			});
+			
+			$(document).on('click', "input.removebtn2", function () {
+			    
+			    var remove_btn_id = $(this).attr('id');
+			    var index2 = remove_btn_id.substring( remove_btn_id.indexOf("neg_rmv_btn_") + 12 );
+			    negRemoveButton( index2 );
+			});	
+
+
+
+	});
+
+
+	function getValue2()
+	{
+		var id_increment;
+		id_increment = $("#neg_lbl_count").val();
+		$("#neg_lbl_count").val(++id_increment);	
+		return id_increment;
+	} 
+
+	function negCommentButton( id ){
+	
+		var get_str_id =  id;
+		$( "#neg_comment_box_"+get_str_id ).show();	
+	}
+		
+
+	function negEditBox( id )
+	{	    	
+		$( 'input#box2').val($('label#neg_box_'+id).text());
+		$( "#id_neg_sntnce_count_"+id ).remove();	
+		$( "#neg_box_"+id ).remove();
+		$( "#neg_edit_btn_"+id ).remove();
+		$( "#neg_rmv_btn_"+id ).remove();	
+		$( "#neg_comment_btn_"+id ).remove();	
+		$( "#neg_comment_box_"+id ).remove();
+	}
+
+	function negRemoveButton( id )
+	{	    
+		var rmv_btn_id = id;
+		$( "#id_neg_sntnce_count_"+rmv_btn_id ).remove();	
+		$( "#neg_box_"+rmv_btn_id ).remove();
+		$( "#neg_edit_btn_"+rmv_btn_id ).remove();
+		$( "#neg_rmv_btn_"+rmv_btn_id ).remove();	
+		$( "#neg_comment_btn_"+rmv_btn_id ).remove();	
+		$( "#neg_comment_box_"+rmv_btn_id ).remove();
+	}
+
+	function getDynamicLabel2() 
+	{
+		var autocount = getValue2();
+		var i =	autocount;
+		var input_string = $("#box2").val();
+		return '<label id="id_neg_sntnce_count_'+autocount+'">'+autocount+'</label><label id="neg_box_'+autocount+'"> ' +input_string+ ' </label>'
+			+'<input id ="altr_txt_box2_'+autocount+'" type="hidden" value ="" />'
+			+'<input id ="neg_edit_btn_'+autocount+'" type="button" value="Edit"  class="editbtn2"  />'
+			+'<input id ="neg_rmv_btn_'+autocount+'" type="button" value="Remove"  class="removebtn2" />'
+			+'<input id ="neg_comment_btn_'+ autocount +'" type="button" value="Comments" class="commentbtn2" />'
+			+'<input id = "neg_comment_box_'+ autocount +'" type="text" value="" style="display:none" />&nbsp'; 	
+	}	
+
+
+	
+
+
+	function validateString2 ()
+	{
+
+		var input_str =$("#box2").val();
+		if(input_str[0] !== input_str[0].toUpperCase())
+		{	
+    		alert("THE FIRST CHARACTER IS NOT A UPPERCASE");
+		}
+			var input_str =$("#box2").val();
+			var white_space_check3 = input_str.substring(input_str.length-5);
+			var white_space_check2 = input_str.substring(input_str.length-4);
+			var white_space_check1 = input_str.substring(input_str.length-3);
+			var white_space_check = input_str.substring(input_str.length-2);
+			document.getElementById("box2").innerHTML = white_space_check3;
+			document.getElementById("box2").innerHTML = white_space_check2;
+			document.getElementById("box2").innerHTML = white_space_check1;
+			document.getElementById("box2").innerHTML = white_space_check;
+
+			if( white_space_check3 == "    ." || white_space_check2 == "   ." || white_space_check1 == "  ." || white_space_check == " .")
+			{
+   				alert("END OF THE STRING CONTAINS SPACE"); 
+			}
+				var input_str =$("#box2").val();	
+				var special_character = /[ó/º/í/]/g;
+				if( special_character.test(input_str) == true)
+				{
+					var check = special_character.test(input_str);	
+					var found_special_character = input_str.match(special_character);	
+					alert("THE STRING CONTAINS SPECIAL CHARACTER \t:" + found_special_character);	
+				}
+
+				var input_str =$("#box2").val();
+				var two_dots = input_str.substring(input_str.length-2);
+				document.getElementById("box2").innerHTML = two_dots;
+				if( two_dots == "..")
+				{
+					alert("END OF THE STRING CONTAINS TWO DOTS")
+				}
+
+				var input_str =$("#box2").val();
+				if(!input_str.match(/^\w+((\s\w+)?\s\w+)?$/)) 
+				{
+                    			alert("STRING HAVE MORE THAN ONE SPACE BETWEEN WORDS");
+				}
+	}	
+
+	$(document).ready(function()
+	{		
+		$("#box3").focusout( function (event)
+		{
+			$("#box3");
+			var div = $("<div/>");
+			var valFlag = validateString3();
+			if ( valFlag != false ) 
+			{	
+			div.html( getDynamicLabel3() );				
+			$("#question").append(div);
+			$("#box3").val("");
+			}
+			else 
+			{
+				alert ( "Invalid String...!" );
+			}
+			});
+			$(document).on('click', "input.editbtn3", function () {
+			    
+			    var edit_btn_id = $(this).attr('id');
+			    var index = edit_btn_id.substring( edit_btn_id.indexOf("que_edit_btn_") + 13 );
+			    queEditBox( index ); 
+
+			});
+			
+			$(document).on('click', "input.commentbtn3", function () {
+			    
+			    var comment_btn_id = $(this).attr('id');
+			    var index1 = comment_btn_id.substring( comment_btn_id.indexOf("que_comment_btn_") + 16 );
+			    queCommentButton( index1  );
+
+			});
+			
+			$(document).on('click', "input.removebtn3", function () {
+			    
+			    var remove_btn_id = $(this).attr('id');
+			    var index2 = remove_btn_id.substring( remove_btn_id.indexOf("que_rmv_btn_") + 12 );
+			    queRemoveButton( index2 );
+			});	
+
+
+
+	});
+
+
+	function getValue3()
+	{
+		var id_increment;
+		id_increment = $("#que_lbl_count").val();
+		$("#que_lbl_count").val(++id_increment);	
+		return id_increment;
+	} 
+
+	function queCommentButton( id ){
+	
+		var get_str_id =  id;
+		$( "#que_comment_box_"+get_str_id ).show();	
+	}
+		
+
+	function queEditBox( id )
+	{	    	
+		$( 'input#box3').val($('label#que_box_'+id).text());
+		$( "#id_que_sntnce_count_"+id ).remove();	
+		$( "#que_box_"+id ).remove();
+		$( "#que_edit_btn_"+id ).remove();
+		$( "#que_rmv_btn_"+id ).remove();	
+		$( "#que_comment_btn_"+id ).remove();	
+		$( "#que_comment_box_"+id ).remove();
+	}
+
+	function queRemoveButton( id )
+	{	    
+		var rmv_btn_id = id;
+		$( "#id_que_sntnce_count_"+rmv_btn_id ).remove();	
+		$( "#que_box_"+rmv_btn_id ).remove();
+		$( "#que_edit_btn_"+rmv_btn_id ).remove();
+		$( "#que_rmv_btn_"+rmv_btn_id ).remove();	
+		$( "#que_comment_btn_"+rmv_btn_id ).remove();	
+		$( "#que_comment_box_"+rmv_btn_id ).remove();
+	}
+
+	function getDynamicLabel3() 
+	{
+		var autocount = getValue3();
+		var i =	autocount;
+		var input_string = $("#box3").val();
+		return '<label id="id_que_sntnce_count_'+autocount+'">'+autocount+'</label><label id="que_box_'+autocount+'"> ' +input_string+ ' </label>'
+			+'<input id ="altr_txt_box3_'+autocount+'" type="hidden" value ="" />'
+			+'<input id ="que_edit_btn_'+autocount+'" type="button" value="Edit"  class="editbtn3"  />'
+			+'<input id ="que_rmv_btn_'+autocount+'" type="button" value="Remove"  class="removebtn3" />'
+			+'<input id ="que_comment_btn_'+ autocount +'" type="button" value="Comments" class="commentbtn3" />'
+			+'<input id = "que_comment_box_'+ autocount +'" type="text" value="" style="display:none" />&nbsp'; 	
+	}	
+
+
+	
+
+
+	function validateString3 ()
+	{
+
+		var input_str =$("#box3").val();
+		if(input_str[0] !== input_str[0].toUpperCase())
+		{	
+    		alert("THE FIRST CHARACTER IS NOT A UPPERCASE");
+		}
+			var input_str =$("#box3").val();
+			var white_space_check3 = input_str.substring(input_str.length-5);
+			var white_space_check2 = input_str.substring(input_str.length-4);
+			var white_space_check1 = input_str.substring(input_str.length-3);
+			var white_space_check = input_str.substring(input_str.length-2);
+			document.getElementById("box3").innerHTML = white_space_check3;
+			document.getElementById("box3").innerHTML = white_space_check2;
+			document.getElementById("box3").innerHTML = white_space_check1;
+			document.getElementById("box3").innerHTML = white_space_check;
+
+			if( white_space_check3 == "    ." || white_space_check2 == "   ." || white_space_check1 == "  ." || white_space_check == " .")
+			{
+   				alert("END OF THE STRING CONTAINS SPACE"); 
+			}
+				var input_str =$("#box3").val();	
+				var special_character = /[ó/º/í/]/g;
+				if( special_character.test(input_str) == true)
+				{
+					var check = special_character.test(input_str);	
+					var found_special_character = input_str.match(special_character);	
+					alert("THE STRING CONTAINS SPECIAL CHARACTER \t:" + found_special_character);	
+				}
+
+				var input_str =$("#box3").val();
+				var two_dots = input_str.substring(input_str.length-2);
+				document.getElementById("box3").innerHTML = two_dots;
+				if( two_dots == "..")
+				{
+					alert("END OF THE STRING CONTAINS TWO DOTS")
+				}
+
+				var input_str =$("#box3").val();
+				if(!input_str.match(/^\w+((\s\w+)?\s\w+)?$/)) 
+				{
+                    			alert("STRING HAVE MORE THAN ONE SPACE BETWEEN WORDS");
+				}
+	}	
+
+	</script>
+
+
+    <body>
+	<div id="main" style="width:100%;"> 
+
+		<div id="top">
+			<h3><center>Life Game Management System</center></h3>	
+		</div>
+		
+		<div id="menu">
+		
+		<table id="tba">
+	    		<tr>
+			    <th>Factgame </th>   
+			  </tr>
+			  <tr>
+			  	<th>Selectiongame </th>
+			  </tr>
+		</table>	    
+	    
+	    </div>
+
+	    <div id="actionlist">
+
+		<div id="storynumber">
+			<label id="lbl"> Story </label>
+			<span id="circle">1</span>	
+		</div>
+		<div id="story">
+			<form>
+  				Story:
+				<label id="lbl1">Add New Fact Type</label>
+				<select id="combo3">
+  				<option  value="Yes">Yes</option>
+				</select>
+				</br>
+				<input id="box" type="text" name="Story"/>
+				<input id="str_lbl_count" type="hidden" name="str_lbl_count" value="0" />
+				
+			</form>
+			</br>
+		</div>
+
+		<div id="positive">
+			<form>
+				PositiveFacts:
+				</br>
+				<input id="box1" type="text" name="PositiveFacts"/>
+				<input id="lbl_count" type="hidden" name="lbl_count" value="0" />
+				</br>
+			</form>
+			</br>
+			
+		</div>
+		<div id="negative">
+			<form>
+				NegativeFacts:
+				</br>
+				<input id="box2" type="text" name="NegativeFacts"/>
+				<input id="neg_lbl_count" type="hidden" name="neg_lbl_count" value="0" />
+				</br>
+			</form>
+			</br>
+			
+		</div>
+
+		<div id="question">
+			<form>
+				Question:
+				</br>
+				<input id="box3" type="text" name="question"/>
+				<input id="que_lbl_count" type="hidden" name="que_lbl_count" value="0" />
+				</br>
+			</form>
+			</br>
+			
+		</div>
+		<div id="options">
+			<form>
+				Options:
+				</br>
+				<select id="combo">
+  					<option  value="Yes">Yes</option>
+				</select>
+				<select id="combo1">
+  					<option value="No">No</option>
+				</select>
+				<select id="combo2">
+  					<option value="Answer">Answer</option>
+				</select>
+			</form>
+			<br>
+		</div>
+
+		<div>
+			</br>
+			<button type="button" style="display: block; margin: 0 auto;">Submit</button>	
+		</div>
+	    </div>			
+	</div>
+    </body>
+</html>
